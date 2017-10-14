@@ -45,6 +45,7 @@ function Canduit (opts, cb) {
   this.token = opts.token;
 
   this.configFile = opts.configFile;
+  self.request.defaults = opts.requestDefaults || {};
 
   var self = this;
   if (!this.api) {
@@ -107,7 +108,7 @@ Canduit.prototype.createRequest = function createRequest (route, params, cb) {
     params.__conduit__ = { token: this.token };
   }
 
-  var req = request.post(this.api + route, {
+  var req = this.request.post(this.api + route, {
     json: true,
     form: {
       output: 'json',
